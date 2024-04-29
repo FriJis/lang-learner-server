@@ -8,22 +8,17 @@ services:
     ports:
       - ${APP_PORT}:3000
     command: yarn start:dev
-    environment:
-      MONGODB_URL: mongodb://${DB_NAME}:${DB_PASSWORD}@mongo:27017/
-  
-  mongo:
-    image: mongo
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${DB_NAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./src:/app/src
+    depends_on:
+      - redis
+  redis:
+    image: redis/redis-stack
+    volumes:
+      - redis-data:/data
+      - ./conf/redis.conf:/redis-stack.conf
+    # ports:
+    #   - 8001:8001
 
-  mongo-express:
-    image: mongo-express
-    restart: always
-    ports:
-      - ${MONGO_EXPRESS_PORT}:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: ${DB_NAME}
-      ME_CONFIG_MONGODB_ADMINPASSWORD: ${DB_PASSWORD}
-      ME_CONFIG_MONGODB_URL: mongodb://${DB_NAME}:${DB_PASSWORD}@mongo:27017/
+volumes:
+  redis-data:
