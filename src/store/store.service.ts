@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
-import { RedisService } from 'src/redis/redis.service';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import * as _ from 'lodash';
+import { RedisService } from 'src/common/redis/redis.service';
 
 @Injectable()
 export class StoreService {
@@ -9,7 +10,10 @@ export class StoreService {
     return this.RedisService.setJson(key, value);
   };
 
-  getValue = (key: string) => {
-    return this.RedisService.getJson(key);
+  getValue = async (key: string) => {
+    const value = await this.RedisService.getJson(key);
+    if (_.isNull(value))
+      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+    return value;
   };
 }

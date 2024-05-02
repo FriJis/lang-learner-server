@@ -1,5 +1,7 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { StoreService } from './store.service';
+import { PasswordGuard } from 'src/common/guards/password/password.guard';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('api/store')
 export class StoreController {
@@ -11,6 +13,7 @@ export class StoreController {
   }
 
   @Get('/:key')
+  @UseGuards(PasswordGuard)
   getState(@Param('key') key: string) {
     try {
       return this.storeService.getValue(key);

@@ -1,5 +1,4 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { RedisClientType } from '@redis/client';
 import { createClient } from 'redis';
 import json from '@redis/json';
 
