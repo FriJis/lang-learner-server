@@ -14,3 +14,6 @@ $ docker compose build
 ```bash
 $ docker compose up -d
 ```
+```
+The default password is 'example'. To change it you can do it manually in .env file, the APP_PASSWORD field
+```

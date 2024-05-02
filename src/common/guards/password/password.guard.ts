@@ -24,7 +24,7 @@ export class PasswordGuard implements CanActivate {
 
     if (!clientPassword) return false;
 
-    const pass = clientPassword.replace('basic ', '');
+    const pass = clientPassword.replace('Basic ', '');
 
     if (pass !== serverPassword) return null;
 

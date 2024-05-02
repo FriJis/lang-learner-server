@@ -8,6 +8,7 @@ export class StoreController {
   constructor(private readonly storeService: StoreService) {}
 
   @Post('/')
+  @UseGuards(PasswordGuard)
   setState(@Body() body: { key: string; value: any }) {
     return this.storeService.setValue(body.key, body.value);
   }
